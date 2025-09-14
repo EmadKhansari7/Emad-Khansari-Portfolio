@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Emad Khansari, a developer and electronic engineer from Isfahan, Iran. Specializing in Android, IoT, and more. عماد خوانساری">
+  <meta name="keywords" content="Emad Khansari, Emad Hossein Khansari, عماد خوانساری, عماد حسین خوانساری, Android developer, electronic engineer, microcontroller, ESP32, Linux, Python, C++">
+  <meta name="author" content="Emad Khansari">
+  <title>Emad Khansari - Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <style>
+    :root {
+      --primary-color: #D4A017;
+      --secondary-color: #1F2A25;
+      --card-bg: #2D3A34;
+      --scroll: 0%;
+      --transition: all 0.4s ease;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #0D0F0A;
+      color: var(--primary-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--scroll);
+      height: 3px;
+      background: var(--primary-color);
+      z-index: 1001;
+      transition: width 0.4s ease;
+      will-change: width; /* Optimize for performance */
+    }
+    
+    .canvas-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0D0F0A 0%, #1a1f1a 100%);
+    }
+    
+    .animate-fade {
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card {
+      background: var(--secondary-color);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(31, 42, 37, 0.2);
+      transition: var(--transition);
+      margin-bottom: 15px;
+      border: 1px solid rgba(212, 160, 23, 0.3);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 5px 10px rgba(31, 42, 37, 0.3);
+      border-color: rgba(212, 160, 23, 0.5);
+    }
+    
+    .github-button {
+      display: inline-block;
+      background: var(--primary-color);
+      color: var(--secondary-color);
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: var(--transition);
+      margin-top: 20px;
+    }
+    .github-button:hover {
+      background: #FFD700;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(212, 160, 23, 0.3);
+    }
+
+    .cert-box {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 8px 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), 0 2px 5px rgba(45, 58, 52, 0.2);
+      transition: var(--transition);
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cert-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.1), transparent);
+      transition: left 0.7s ease;
+    }
+    
+    .cert-box:hover::before {
+      left: 100%;
+    }
+    
+    .cert-box:hover {
+      background: #3D4A40;
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px #FFD700, 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .social-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      margin: 8px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 16px;
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    .social-box:hover {
+      background: #3D4A40;
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .social-box i {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(13, 15, 10, 0.95);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .modal-content {
+      background: var(--secondary-color);
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      animation: popIn 0.5s ease-out;
+      border: 1px solid rgba(212, 160, 23, 0.3);
+    }
+    
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    .close {
+      color: var(--primary-color);
+      float: right;
+      font-size: 28px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      line-height: 1;
+    }
+    
+    .close:hover {
+      color: #FFD700;
+    }
+    
+    .footer {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(13, 15, 10, 0.8);
+      text-align: center;
+      font-size: 14px;
+      border-top: 1px solid rgba(212, 160, 23, 0.2);
+      width: 100%;
+    }
+    
+    .copyable {
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+      font-size: 16px;
+      background: rgba(212, 160, 23, 0.1);
+      border: 1px solid rgba(212, 160, 23, 0.2);
+    }
+    
+    .copyable:hover {
+      background: rgba(212, 160, 23, 0.2);
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(212, 160, 23, 0.2);
+      width: 100%;
+    }
+    
+    .navbar a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 18px;
+      transition: var(--transition);
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+    
+    .navbar a:hover {
+      color: #FFD700;
+      background: rgba(212, 160, 23, 0.1);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: var(--card-bg);
+      border: none;
+      border-radius: 8px;
+      color: var(--primary-color);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1010;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
+    }
+    
+    .mobile-menu-btn:hover {
+      background: #3D4A40;
+      transform: scale(1.05);
+    }
+    
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: var(--secondary-color);
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      z-index: 1005;
+      padding: 80px 30px 30px;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+      transform: translateX(100%);
+      transition: transform 0.4s ease;
+      border-left: 1px solid rgba(212, 160, 23, 0.2);
+    }
+    
+    .mobile-nav.active {
+      transform: translateX(0);
+    }
+    
+    .mobile-nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(212, 160, 23, 0.2);
+      font-size: 20px;
+      transition: var(--transition);
+    }
+    
+    .mobile-nav a:hover {
+      color: #FFD700;
+      padding-left: 15px;
+    }
+    
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1004;
+    }
+    
+    .overlay.active {
+      display: block;
+    }
+    
+    .mobile-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-size: 28px;
+      cursor: pointer;
+    }
+    
+    .section-title {
+      position: relative;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 3px;
+    }
+    
+    .hero-content {
+      text-align: center;
+      padding: 40px 0;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      background: linear-gradient(45deg, #D4A017, #FFD700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(212, 160, 23, 0.3);
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .socials-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .skills-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .skills-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(212, 160, 23, 0.1);
+      position: relative;
+      padding-left: 30px;
+      font-size: 18px;
+    }
+    
+    .skills-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .skills-list li:first-child {
+      font-weight: bold;
+      color: #FFD700;
+      border-top: 2px solid var(--primary-color);
+      margin-top: 10px;
+      padding-top: 15px;
+    }
+    
+    .certs-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+    }
+    
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      flex-wrap: wrap;
+    }
+    
+    .contact-item i {
+      font-size: 24px;
+      color: var(--primary-color);
+      width: 30px;
+      flex-shrink: 0;
+    }
+    
+    .contact-item span {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .profile-image-container {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 25px;
+      overflow: hidden;
+      border: 4px solid var(--primary-color);
+      box-shadow: 0 0 25px rgba(212, 160, 23, 0.4);
+      position: relative;
+    }
+    
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: linear-gradient(45deg, #2D3A34, #1F2A25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 4rem;
+      font-weight: bold;
+    }
+    
+    @media (max-width: 1024px) {
+      .hero-title { font-size: 2.8rem; }
+      .hero-subtitle { font-size: 1.3rem; }
+      .navbar a { font-size: 16px; }
+      .profile-image-container { width: 160px; height: 160px; }
+    }
+    
+    @media (max-width: 768px) {
+      body { padding: 15px; }
+      .hero-title { font-size: 2.5rem; }
+      .hero-subtitle { font-size: 1.2rem; }
+      .navbar { display: none; }
+      .mobile-menu-btn { display: block; }
+      .mobile-nav { display: flex; }
+      .card { padding: 18px; border-radius: 14px; }
+      .social-box { padding: 10px 15px; font-size: 14px; min-width: 100px; }
+      .social-box i { font-size: 18px; margin-right: 8px; }
+      .social-box span { display: none; }
+      .socials-container { gap: 10px; }
+      .certs-container { grid-template-columns: 1fr; }
+      .cert-box { padding: 12px; font-size: 14px; }
+      .skills-list li { font-size: 16px; padding: 10px 0 10px 25px; }
+      .contact-item { font-size: 16px; flex-direction: row; align-items: center; }
+      .contact-item i { font-size: 20px; }
+      .contact-item span { font-size: 14px; word-break: break-all; }
+      .section-title { font-size: 1.6rem; }
+      .about-text, .projects-text { font-size: 14px; }
+      .footer { padding: 15px; font-size: 12px; }
+      .profile-image-container { width: 140px; height: 140px; }
+      .profile-image { font-size: 3.5rem; }
+    }
+    
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2rem; }
+      .hero-subtitle { font-size: 1rem; }
+      .social-box { min-width: 70px; padding: 8px 10px; margin: 5px; }
+      .social-box i { margin-right: 0; font-size: 16px; }
+      .card { padding: 15px; }
+      .section-title { font-size: 1.4rem; }
+      .about-text, .projects-text { font-size: 12px; }
+      .skills-list li { font-size: 15px; }
+      .contact-item { font-size: 14px; flex-direction: row; align-items: center; }
+      .contact-item span { font-size: 12px; word-break: break-all; }
+      .modal-content { padding: 20px; }
+      .footer { font-size: 11px; }
+      .profile-image-container { width: 120px; height: 120px; }
+      .profile-image { font-size: 3rem; }
+    }
+    
+    @media (min-width: 769px) {
+      .mobile-menu-btn,
+      .mobile-nav,
+      .overlay {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-start">
+  <canvas class="canvas-background" id="particleCanvas"></canvas>
+  
+  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+    <i class="fas fa-bars"></i>
+  </button>
+  
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-close-btn" onclick="closeMobileMenu()">
+      <i class="fas fa-times"></i>
+    </button>
+    <a href="#about" onclick="closeMobileMenu()">About</a>
+    <a href="#projects" onclick="closeMobileMenu()">Projects</a>
+    <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+    <a href="#certifications" onclick="closeMobileMenu()">Certifications</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  </div>
+  
+  <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+  
+  <div class="w-full max-w-6xl p-4">
+    <nav class="navbar animate-fade">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    
+    <header class="hero-content animate-fade">
+      <div class="profile-image-container">
+        <img src="images/profile.jpg" alt="Profile Picture" class="profile-image">
+      </div>
+      
+      <h1 class="hero-title">Emad Khansari</h1>
+      <p class="hero-subtitle">Developer & Electronic Engineer</p>
+      
+      <div class="socials-container">
+        <div class="social-box" onclick="showModal('Instagram', 'https://instagram.com/emadkhansari7')">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+        </div>
+        <div class="social-box" onclick="showModal('Telegram', 'https://t.me/emadkhansari7')">
+          <i class="fab fa-telegram"></i>
+          <span>Telegram</span>
+        </div>
+        <div class="social-box" onclick="showModal('Email', 'mailto:Emad.2010robot@gmail.com')">
+          <i class="fas fa-envelope"></i>
+          <span>Email</span>
+        </div>
+        <div class="social-box" onclick="showModal('GitHub', 'https://github.com/emadkhansari7')">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+        </div>
+        <div class="social-box" onclick="showModal('LinkedIn', 'https://linkedin.com/in/emadkhansari7')">
+          <i class="fab fa-linkedin"></i>
+          <span>LinkedIn</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="space-y-12">
+      <section id="about" class="card animate-fade">
+        <h2 class="text-3xl font-semibold section-title">About Me</h2>
+        <p class="about-text text-lg leading-relaxed">
+          Portfolio of Emad Khansari, Developer and electronic engineer from Isfahan, Iran. Specializing in Android development, microcontroller programming, and electronics. My most important skill is deep searching and working with artificial intelligence.
+        </p>
+      </section>
+
+      <section id="projects" class="card animate-fade">
+        <h2 class="text-3xl font-semibold section-title">Projects</h2>
+        <div class="text-center">
+          <p class="projects-text text-lg leading-relaxed mb-4">
+            This is a static showcase of my skills. For a deeper look into my work, including source code and detailed project descriptions, please visit my GitHub profile.
+          </p>
+          <a href="https://github.com/emadkhansari7" target="_blank" class="github-button">
+            <i class="fab fa-github"></i> Visit my GitHub
+          </a>
+        </div>
+      </section>
+
+      <section id="skills" class="card animate-fade">
+        <h2 class="text-3xl font-semibold section-title">Skills</h2>
+        <ul class="skills-list">
+          <li>Deep Searching and Working with Artificial Intelligence</li>
+          <li>Android Development (ADB, OS Customization)</li>
+          <li>Electronics (PCB Design, Soldering)</li>
+          <li>Microcontroller Programming</li>
+          <li>SolidWorks & Proteus (Semi-Professional)</li>
+          <li>Programming: Python, C++</li>
+          <li>Linux: Semi-Professional (Arch & Kali)</li>
+          <li>English Language: A3 Level</li>
+          <li>System Assembly</li>
+          <li>Beginner Laptop & Phone Repair</li>
+        </ul>
+      </section>
+
+      <section id="certifications" class="card animate-fade">
+        <h2 class="text-3xl font-semibold section-title">Certifications</h2>
+        <div class="certs-container">
+          <div class="cert-box" onclick="showCertModal('Certified Ethical Hacker', 'images/cert1.jpg')">Certified Ethical Hacker</div>
+          <div class="cert-box" onclick="showCertModal('CompTIA Network+', 'images/cert2.jpg')">CompTIA Network+</div>
+          <div class="cert-box" onclick="showCertModal('Advanced PCB Design Techniques', 'images/cert13.jpg')">segmentation</div>
+          <div class="cert-box" onclick="showCertModal('Programming with SRC Controller', 'images/cert6.jpg')">Programming with SRC Controller</div>
+          <div class="cert-box" onclick="showCertModal('3D Modeling with SolidWorks', 'images/cert7.jpg')">3D Modeling with SolidWorks</div>
+          <div class="cert-box" onclick="showCertModal('Proteus Software Professional', 'images/cert8.jpg')">Proteus Software Professional</div>
+          <div class="cert-box" onclick="showCertModal('Python Programming with RoboPy', 'images/cert9.jpg')">Python Programming with RoboPy</div>
+          <div class="cert-box" onclick="showCertModal('Design of Robotic Platforms (3D Printer)', 'images/cert11.jpg')">Robotic Platform Design</div>
+          <div class="cert-box" onclick="showCertModal('RoboGate (Electronics)', 'images/cert12.jpg')">RoboGate (Electronics)</div>
+        </div>
+      </section>
+
+      <section id="contact" class="card animate-fade">
+        <h2 class="text-3xl font-semibold section-title">Contact Me</h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>Email: <span class="copyable" onclick="copyToClipboard(this, 'Emad.2010robot@gmail.com')">Emad.2010robot@gmail.com</span></span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <span>Phone: <span class="copyable" onclick="copyToClipboard(this, '+989999069316')">+98 999 906 9316</span> (Private)</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer animate-fade">
+      <p>Born: September 29, 2010 | Location: Isfahan, Iran</p>
+      <p class="mt-2">Built by Emad</p>
+    </footer>
+  </div>
+
+  <div id="socialModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle" class="text-2xl font-semibold mb-4"></h3>
+      <p id="modalLink" class="text-lg mb-4 break-all"></p>
+      <a id="modalUrl" href="#" target="_blank" class="inline-block px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-500 transition">Visit</a>
+    </div>
+  </div>
+
+  <div id="certModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCertModal()">&times;</span>
+      <h3 id="certModalTitle" class="text-2xl font-semibold mb-4"></h3>
+      <img id="certModalImage" src="" alt="Certificate" class="w-full h-auto rounded-lg">
+    </div>
+  </div>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const overlay = document.getElementById('overlay');
+    
+    function toggleMobileMenu() {
+      mobileNav.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    }
+    
+    function closeMobileMenu() {
+      mobileNav.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = Math.random() * 0.8 - 0.4;
+        this.speedY = Math.random() * 0.8 - 0.4;
+        this.alpha = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
+        if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
+      }
+      draw() {
+        ctx.fillStyle = `rgba(212, 160, 23, ${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      particlesArray = [];
+      const particleCount = Math.min(Math.floor(window.innerWidth / 15), 100);
+      for (let i = 0; i < particleCount; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+        
+        for (let j = i; j < particlesArray.length; j++) {
+          const dx = particlesArray[i].x - particlesArray[j].x;
+          const dy = particlesArray[i].y - particlesArray[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(212, 160, 23, ${0.3 * (1 - distance/120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+            ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    
+    window.addEventListener('load', () => {
+      init();
+      animate();
+    });
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    // Improved scroll progress bar with better performance and compatibility
+    let ticking = false;
+    function updateScrollProgress() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          let winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+          let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          let scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+          document.documentElement.style.setProperty('--scroll', Math.min(scrolled, 100) + '%');
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', updateScrollProgress);
+
+    function showModal(title, url) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalLink').textContent = url.replace('mailto:', '');
+      document.getElementById('modalUrl').href = url;
+      document.getElementById('socialModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('socialModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function showCertModal(title, imageSrc) {
+      const modal = document.getElementById('certModal');
+      const modalTitle = document.getElementById('certModalTitle');
+      const modalImage = document.getElementById('certModalImage');
+      modalTitle.textContent = title;
+      modalImage.src = imageSrc;
+      modalImage.alt = `Certificate for ${title}`;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCertModal() {
+      document.getElementById('certModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        closeModal();
+        closeCertModal();
+      }
+    };
+
+    function copyToClipboard(element, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = element.innerHTML;
+        element.innerHTML = 'Copied!';
+        element.style.color = '#4ade80';
+        setTimeout(() => {
+          element.innerHTML = originalText;
+          element.style.color = '';
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    }
+  </script>
+</body>
+</html>
